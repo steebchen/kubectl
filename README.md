@@ -4,25 +4,30 @@ This action provides `kubectl` for Github Actions.
 
 ## Usage
 
+`.github/workflows/push.yml`
+
 ```hcl
-workflow "build and deploy" {
-  on = "push"
-  resolves = ["verify deployment"]
-}
-
-action "deploy to cluster" {
-  needs = ["todo: build and push containers"]
-  uses = "steebchen/kubectl@master"
-  args = "set image --record deployment/my-app container=$GITHUB_REPOSITORY:$GITHUB_SHA"
-  secrets = ["KUBE_CONFIG_DATA"]
-}
-
-action "verify deployment" {
-  needs = "deploy to cluster"
-  uses = "steebchen/kubectl@master"
-  args = ["rollout status deployment/aws-example-octodex"]
-  secrets = ["KUBE_CONFIG_DATA"]
-}
+on: push
+name: deploy
+jobs:
+  deploy:
+    name: deploy to cluster
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: deploy to cluster
+      uses: steebchen/kubectl@master
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      with:
+        args: set image --record deployment/my-app container=${{ github.repository
+          }}:${{ github.sha }}
+    - name: verify deployment
+      uses: steebchen/kubectl@master
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      with:
+        args: '"rollout status deployment/my-app"'
 ```
 
 ## Secrets
