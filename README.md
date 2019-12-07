@@ -6,7 +6,7 @@ This action provides `kubectl` for Github Actions.
 
 `.github/workflows/push.yml`
 
-```hcl
+```yaml
 on: push
 name: deploy
 jobs:
