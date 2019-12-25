@@ -26,6 +26,7 @@ jobs:
       uses: steebchen/kubectl@master
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        KUBECTL_VERSION: "1.15"
       with:
         args: '"rollout status deployment/my-app"'
 ```
@@ -37,5 +38,9 @@ jobs:
 ```bash
 cat $HOME/.kube/config | base64
 ```
+
+## Environment
+
+`KUBECTL_VERSION` - (optional): Used to specify the kubectl version. If not specified, this defaults to kubectl 1.13
 
 **Note**: Do not use kubectl config view as this will hide the certificate-authority-data.
