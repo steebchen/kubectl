@@ -20,8 +20,7 @@ jobs:
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
-        args: set image --record deployment/my-app container=${{ github.repository
-          }}:${{ github.sha }}
+        args: set image --record deployment/my-app container=${{ github.repository }}:${{ github.sha }}
     - name: verify deployment
       uses: steebchen/kubectl@master
       env:
