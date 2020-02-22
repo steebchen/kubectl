@@ -1,0 +1,9 @@
+name: 'kubectl'
+description: 'The kubectl command line program as a GitHub Action'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+branding:
+  icon: 'terminal'
+  color: 'blue'
+  
