@@ -25,7 +25,7 @@ jobs:
       uses: steebchen/kubectl@master
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-        KUBECTL_VERSION: "1.15"
+        KUBECTL_VERSION: "1.19"
       with:
         args: '"rollout status deployment/my-app"'
 ```
