@@ -21,9 +21,8 @@ jobs:
     - uses: actions/checkout@master
     - name: deploy to cluster
       uses: steebchen/kubectl@v2.0.0
-      with:
+      with: # defaults to latest kubectl binary version
         config: ${{ secrets.KUBE_CONFIG_DATA }}
-        version: v1.21.0
         command: set image --record deployment/my-app container=${{ github.repository }}:${{ github.sha }}
     - name: verify deployment
       uses: steebchen/kubectl@v2.0.0
@@ -35,8 +34,6 @@ jobs:
 
 ## Arguments
 
-`version` – **required**: The kubectl version with a 'v' prefix, e.g. `v1.21.0`
-
 `command` – **required**: The command you want to run, without `kubectl`, e.g. `get pods`
 
 `config` – **required**: A base64-encoded kubeconfig file with credentials for Kubernetes to access the cluster. You can get it by running the following command:
@@ -44,5 +41,7 @@ jobs:
 ```bash
 cat $HOME/.kube/config | base64
 ```
+
+`version`: The kubectl version with a 'v' prefix, e.g. `v1.21.0`. It defaults to the latest kubectl binary version available.
 
 **Note**: Do not use kubectl config view as this will hide the certificate-authority-data.
