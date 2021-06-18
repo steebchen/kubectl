@@ -20,13 +20,13 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: deploy to cluster
-      uses: steebchen/kubectl@master
+      uses: steebchen/kubectl@v2.0.0
       with:
         config: ${{ secrets.KUBE_CONFIG_DATA }}
         version: v1.21.0
         command: set image --record deployment/my-app container=${{ github.repository }}:${{ github.sha }}
     - name: verify deployment
-      uses: steebchen/kubectl@master
+      uses: steebchen/kubectl@v2.0.0
       with:
         config: ${{ secrets.KUBE_CONFIG_DATA }}
         version: v1.21.0
