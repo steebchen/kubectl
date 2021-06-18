@@ -1,6 +1,10 @@
-# Github Action for Kubernetes CLI
+# GitHub Action for Kubernetes CLI
 
-This action provides `kubectl` for Github Actions.
+This action provides `kubectl` for GitHub Actions.
+
+## Upgrading from v1 to v2
+
+If you upgrade from v1 to v2, note that you need to specify new variables via `with`, namely `version`, `config`, and `command`. See below for an example.
 
 ## Usage
 
@@ -17,29 +21,28 @@ jobs:
     - uses: actions/checkout@master
     - name: deploy to cluster
       uses: steebchen/kubectl@master
-      env:
-        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
-        args: set image --record deployment/my-app container=${{ github.repository }}:${{ github.sha }}
+        config: ${{ secrets.KUBE_CONFIG_DATA }}
+        version: v1.21.0
+        command: set image --record deployment/my-app container=${{ github.repository }}:${{ github.sha }}
     - name: verify deployment
       uses: steebchen/kubectl@master
-      env:
-        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-        KUBECTL_VERSION: "1.19"
       with:
-        args: '"rollout status deployment/my-app"'
+        config: ${{ secrets.KUBE_CONFIG_DATA }}
+        version: v1.21.0
+        command: rollout status deployment/my-app
 ```
 
-## Secrets
+## Arguments
 
-`KUBE_CONFIG_DATA` – **required**: A base64-encoded kubeconfig file with credentials for Kubernetes to access the cluster. You can get it by running the following command:
+`version` – **required**: The kubectl version with a 'v' prefix, e.g. `v1.21.0`
+
+`command` – **required**: The command you want to run, without `kubectl`, e.g. `get pods`
+
+`config` – **required**: A base64-encoded kubeconfig file with credentials for Kubernetes to access the cluster. You can get it by running the following command:
 
 ```bash
 cat $HOME/.kube/config | base64
 ```
-
-## Environment
-
-`KUBECTL_VERSION` - (optional): Used to specify the kubectl version. If not specified, this defaults to kubectl 1.13
 
 **Note**: Do not use kubectl config view as this will hide the certificate-authority-data.

@@ -1,9 +1,22 @@
-name: 'kubectl'
+name: 'kubectl-simple'
 description: 'The kubectl command line program as a GitHub Action'
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  args:
+    - ${{ inputs.version }}
+    - ${{ inputs.config }}
+    - ${{ inputs.command }}
 branding:
   icon: 'terminal'
   color: 'blue'
-  
+inputs:
+  version:
+    description: 'kubectl version, e.g. `v1.21.0`'
+    required: true
+  config:
+    description: 'kube config data'
+    required: true
+  command:
+    description: 'kubectl command to run, without the kubectl, e.g. `get pods`'
+    required: true
