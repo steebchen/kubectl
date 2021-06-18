@@ -28,7 +28,7 @@ jobs:
       uses: steebchen/kubectl@v2.0.0
       with:
         config: ${{ secrets.KUBE_CONFIG_DATA }}
-        version: v1.21.0
+        version: v1.21.0 # specify kubectl binary version explicitly
         command: rollout status deployment/my-app
 ```
 
