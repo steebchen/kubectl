@@ -17,7 +17,7 @@ chmod +x kubectl
 mv kubectl /usr/local/bin
 
 # Extract the base64 encoded config data and write this to the KUBECONFIG
-echo "$config" | base64 -d > /tmp/config
+echo "$config" > /tmp/config
 export KUBECONFIG=/tmp/config
 
 sh -c "kubectl $command"

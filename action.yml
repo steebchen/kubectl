@@ -5,7 +5,7 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.version }}
-    - $(echo "${{ inputs.config }}" | base64)
+    - ${{ inputs.config }}
     - ${{ inputs.command }}
 branding:
   icon: 'terminal'
