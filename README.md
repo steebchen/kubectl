@@ -23,12 +23,13 @@ jobs:
       uses: steebchen/kubectl@v2.0.0
       with: # defaults to latest kubectl binary version
         config: ${{ secrets.KUBE_CONFIG_DATA }}
-        command: set image --record deployment/my-app container=${{ github.repository }}:${{ github.sha }}
+        command: set image --record deployment/my-app container=${{ github.repository }}:${{ github.sha }}        
     - name: verify deployment
       uses: steebchen/kubectl@v2.0.0
       with:
         config: ${{ secrets.KUBE_CONFIG_DATA }}
         version: v1.21.0 # specify kubectl binary version explicitly
+        binaries-url: "https://dl.k8s.io/release/v1.21.0/bin/linux/amd64/kubectl" # specify the download url explicitly
         command: rollout status deployment/my-app
 ```
 
@@ -43,5 +44,7 @@ cat $HOME/.kube/config | base64
 ```
 
 `version`: The kubectl version with a 'v' prefix, e.g. `v1.21.0`. It defaults to the latest kubectl binary version available.
+
+`binaries-url`: The url to download the binaries from. It defaults to the official release page if empty.
 
 **Note**: Do not use kubectl config view as this will hide the certificate-authority-data.
