@@ -23,7 +23,7 @@ jobs:
       uses: steebchen/kubectl@v2.0.0
       with: # defaults to latest kubectl binary version
         config: ${{ secrets.KUBE_CONFIG_DATA }}
-        command: set image --record deployment/my-app container=${{ github.repository }}:${{ github.sha }}        
+        command: set image --record deployment/my-app container=${{ github.repository }}:${{ github.sha }}
     - name: verify deployment
       uses: steebchen/kubectl@v2.0.0
       with:
