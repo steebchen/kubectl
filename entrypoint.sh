@@ -7,7 +7,7 @@ config="$2"
 command="$3"
 binaries_url="$4"
 
-if [ -n "$binaries_url" ]; then
+if [ -z "$binaries_url" ]; then
   if [ "$version" = "latest" ]; then
     version=$(curl -Ls https://dl.k8s.io/release/stable.txt)
   fi
